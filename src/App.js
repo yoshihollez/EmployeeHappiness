@@ -3,6 +3,8 @@ import "./App.css";
 import M from "materialize-css";
 import { Navbar, NavItem, Icon } from "react-materialize";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import Rating from "./routes/Rating";
+import Statistics from "./routes/Statistics";
 
 export default class App extends React.Component {
   constructor(props) {
@@ -40,10 +42,10 @@ export default class App extends React.Component {
         </Navbar>
         <Switch>
           <Route path="/statistics">
-            <p>statistics</p>
+            <Statistics />
           </Route>
           <Route path="/">
-            <p>defualt path</p>
+            <Rating />
           </Route>
         </Switch>
       </Router>
