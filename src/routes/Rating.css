@@ -1,0 +1,10 @@
+.buttonContainer {
+  padding: 5%;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+}
+.buttonContainer > div {
+  padding: 5%;
+}
