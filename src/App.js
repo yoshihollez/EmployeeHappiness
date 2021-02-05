@@ -1,25 +1,52 @@
-import logo from './logo.svg';
-import './App.css';
+import React from "react";
+import "./App.css";
+import M from "materialize-css";
+import { Navbar, NavItem, Icon } from "react-materialize";
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
+export default class App extends React.Component {
+  constructor(props) {
+    super(props);
+    M.AutoInit();
+    this.state = {};
+  }
+
+  render() {
+    return (
+      <Router>
+        <Navbar
+          alignLinks="right"
+          brand={
+            <a className="brand-logo" href="/#">
+              Employee Happiness
+            </a>
+          }
+          id="mobile-nav"
+          menuIcon={<Icon>menu</Icon>}
+          options={{
+            draggable: true,
+            edge: "left",
+            inDuration: 250,
+            onCloseEnd: null,
+            onCloseStart: null,
+            onOpenEnd: null,
+            onOpenStart: null,
+            outDuration: 200,
+            preventScrolling: true,
+          }}
         >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+          <NavItem href="/#">defualt</NavItem>
+          <NavItem href="/statistics">statistics</NavItem>
+        </Navbar>
+        <Switch>
+          <Route path="/statistics">
+            <p>statistics</p>
+          </Route>
+          <Route path="/">
+            <p>defualt path</p>
+          </Route>
+        </Switch>
+      </Router>
+    );
+  }
 }
-
-export default App;
