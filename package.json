@@ -9,6 +9,7 @@
     "materialize-css": "^1.0.0-rc.2",
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
+    "react-github-login": "^1.0.3",
     "react-materialize": "^3.9.7",
     "react-minimal-pie-chart": "^8.1.0",
     "react-router-dom": "^5.2.0",

@@ -2,6 +2,7 @@ import React from "react";
 import "./Statistics.css";
 import { Button, Icon } from "react-materialize";
 import { PieChart } from "react-minimal-pie-chart";
+import GitHubLogin from "react-github-login";
 
 export default class Statistics extends React.Component {
   constructor(props) {
@@ -34,7 +35,6 @@ export default class Statistics extends React.Component {
   };
 
   render() {
-    console.log(window.innerHeight);
     return (
       <div className="Statistics">
         <p>{this.state.responseMessage}</p>
@@ -80,7 +80,6 @@ export default class Statistics extends React.Component {
             </p>
           </div>
         </div>
-
         <div className="graph">
           <PieChart
             label={({ dataEntry }) =>
