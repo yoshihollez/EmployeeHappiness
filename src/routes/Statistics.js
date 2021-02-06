@@ -34,6 +34,7 @@ export default class Statistics extends React.Component {
   };
 
   render() {
+    console.log(window.innerHeight);
     return (
       <div className="Statistics">
         <p>{this.state.responseMessage}</p>
@@ -71,6 +72,12 @@ export default class Statistics extends React.Component {
           <div>
             <Icon medium>sentiment_very_satisfied</Icon>
             <p>A satisfied employee gets a score of 3.</p>
+          </div>
+          <div>
+            <Icon medium>assessment</Icon>
+            <p>
+              The average Happiness is {this.state.averageEmployeeHappiness}
+            </p>
           </div>
         </div>
 
