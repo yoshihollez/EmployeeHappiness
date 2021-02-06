@@ -8,13 +8,28 @@ export default class Rating extends React.Component {
     this.state = {};
   }
 
+  sendEmployeeHappiness = (moodValue) => {
+    console.log("sendEmployeeHappiness");
+    const requestOptions = {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ mood: moodValue }),
+    };
+    fetch("http://localhost:4000/addEmployeeHappiness", requestOptions)
+      .then((response) => response.json())
+      .then((data) => this.setState({ responseMessage: data.responseMessage }));
+  };
+
   render() {
     return (
       <div>
-        <p>rating</p>
+        <h2>Please rate how your day was. All data will be anonymous.</h2>
         <div className="buttonContainer">
           <div>
             <Button
+              onClick={() => {
+                this.sendEmployeeHappiness("dissatisfied");
+              }}
               large
               className="red"
               floating
@@ -24,6 +39,9 @@ export default class Rating extends React.Component {
           </div>
           <div>
             <Button
+              onClick={() => {
+                this.sendEmployeeHappiness("neutral");
+              }}
               large
               className="red"
               floating
@@ -33,6 +51,9 @@ export default class Rating extends React.Component {
           </div>
           <div>
             <Button
+              onClick={() => {
+                this.sendEmployeeHappiness("satisfied");
+              }}
               large
               className="red"
               floating
