@@ -8,6 +8,12 @@ export default class Statistics extends React.Component {
     this.state = {};
   }
 
+  getEmployeeHappinessRatings = async (period) => {
+    fetch(`http://localhost:4000/getEmployeeHappinessAverage/${period}`)
+      .then((response) => response.json())
+      .then((data) => this.setState({ responseMessage: data.responseMessage }));
+  };
+
   render() {
     return (
       <div className="Statistics">
@@ -17,33 +23,7 @@ export default class Statistics extends React.Component {
             data={[
               {
                 label: "Series 1",
-                data: [
-                  [0, 1],
-                  [1, 2],
-                  [2, 4],
-                  [3, 2],
-                  [4, 7],
-                ],
-              },
-              {
-                label: "Series 2",
-                data: [
-                  [0, 3],
-                  [1, 1],
-                  [2, 5],
-                  [3, 6],
-                  [4, 4],
-                ],
-              },
-              {
-                label: "Series 3",
-                data: [
-                  [0, 5],
-                  [1, 1],
-                  [2, 1],
-                  [3, 1],
-                  [4, 4],
-                ],
+                data: [],
               },
             ]}
             axes={[
