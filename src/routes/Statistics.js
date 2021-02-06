@@ -1,6 +1,6 @@
 import React from "react";
 import "./Statistics.css";
-import { Button } from "react-materialize";
+import { Button, Icon } from "react-materialize";
 import { PieChart } from "react-minimal-pie-chart";
 
 export default class Statistics extends React.Component {
@@ -9,7 +9,7 @@ export default class Statistics extends React.Component {
     this.state = {
       responseMessage: "",
       averageEmployeeHappiness: 0,
-      totalEmployeeHappiness: {
+      totalEmployeeMoods: {
         totalEmployeesDissatisfied: 1,
         totalEmployeesNeutral: 1,
         totalEmployeesSatisfied: 1,
@@ -28,7 +28,7 @@ export default class Statistics extends React.Component {
         this.setState({
           responseMessage: data.responseMessage,
           averageEmployeeHappiness: data.averageEmployeeHappiness,
-          totalEmployeeHappiness: JSON.parse(data.totalEmployeeHappiness),
+          totalEmployeeMoods: data.totalEmployeeMoods,
         })
       );
   };
@@ -59,6 +59,21 @@ export default class Statistics extends React.Component {
           month
         </Button>
 
+        <div>
+          <div>
+            <Icon medium>sentiment_very_dissatisfied</Icon>
+            <p>A dissatisfied employee gets a score of 1.</p>
+          </div>
+          <div>
+            <Icon medium>sentiment_neutral</Icon>
+            <p>A neutral employee gets a score of 2.</p>
+          </div>
+          <div>
+            <Icon medium>sentiment_very_satisfied</Icon>
+            <p>A satisfied employee gets a score of 3.</p>
+          </div>
+        </div>
+
         <div className="graph">
           <PieChart
             label={({ dataEntry }) =>
@@ -69,19 +84,17 @@ export default class Statistics extends React.Component {
             data={[
               {
                 title: "Dissatisfied",
-                value: this.state.totalEmployeeHappiness
-                  .totalEmployeesDissatisfied,
+                value: this.state.totalEmployeeMoods.totalEmployeesDissatisfied,
                 color: "#E38627",
               },
               {
                 title: "Neutral",
-                value: this.state.totalEmployeeHappiness.totalEmployeesNeutral,
+                value: this.state.totalEmployeeMoods.totalEmployeesNeutral,
                 color: "#C13C37",
               },
               {
                 title: "Satisfied",
-                value: this.state.totalEmployeeHappiness
-                  .totalEmployeesSatisfied,
+                value: this.state.totalEmployeeMoods.totalEmployeesSatisfied,
                 color: "#6A2135",
               },
             ]}
