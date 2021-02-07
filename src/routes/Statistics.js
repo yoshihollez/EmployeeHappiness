@@ -9,6 +9,8 @@ export default class Statistics extends React.Component {
     super(props);
     this.state = {
       responseMessage: "",
+      showChart: "none",
+      timePeriod: "day",
       averageEmployeeHappiness: 0,
       totalEmployeeMoods: {
         totalEmployeesDissatisfied: 1,
@@ -27,13 +29,23 @@ export default class Statistics extends React.Component {
       `http://${process.env.REACT_APP_API_IP}:${process.env.REACT_APP_API_PORT}/getEmployeeHappinessAverage/${period}`
     )
       .then((response) => response.json())
-      .then((data) =>
-        this.setState({
-          responseMessage: data.responseMessage,
-          averageEmployeeHappiness: data.averageEmployeeHappiness,
-          totalEmployeeMoods: data.totalEmployeeMoods,
-        })
-      );
+      .then((data) => {
+        if (
+          data.responseMessage +
+            data.averageEmployeeHappiness +
+            data.totalEmployeeMoods !=
+          0
+        ) {
+          this.setState({
+            responseMessage: data.responseMessage,
+            averageEmployeeHappiness: data.averageEmployeeHappiness,
+            totalEmployeeMoods: data.totalEmployeeMoods,
+            showChart: "inline",
+          });
+        } else {
+          this.setState({ showChart: "none" });
+        }
+      });
   };
 
   render() {
@@ -42,6 +54,7 @@ export default class Statistics extends React.Component {
         <p>{this.state.responseMessage}</p>
         <Button
           onClick={() => {
+            this.setState({ timePeriod: "day" });
             this.getEmployeeHappinessRatings("day");
           }}
         >
@@ -49,6 +62,7 @@ export default class Statistics extends React.Component {
         </Button>
         <Button
           onClick={() => {
+            this.setState({ timePeriod: "week" });
             this.getEmployeeHappinessRatings("week");
           }}
         >
@@ -56,6 +70,7 @@ export default class Statistics extends React.Component {
         </Button>
         <Button
           onClick={() => {
+            this.setState({ timePeriod: "month" });
             this.getEmployeeHappinessRatings("month");
           }}
         >
@@ -78,13 +93,15 @@ export default class Statistics extends React.Component {
           <div>
             <Icon medium>assessment</Icon>
             <p>
-              The average Happiness is {this.state.averageEmployeeHappiness}
+              The average Happiness of the past {this.state.timePeriod} is:{" "}
+              {this.state.averageEmployeeHappiness}
             </p>
           </div>
         </div>
 
         <div className="graph">
           <PieChart
+            style={{ display: this.state.showChart }}
             label={({ dataEntry }) =>
               `${dataEntry.title}: \n ${Math.round(dataEntry.percentage)} %`
             }
