@@ -9,7 +9,6 @@ export default class Rating extends React.Component {
   }
 
   sendEmployeeHappiness = (moodValue) => {
-    console.log("sendEmployeeHappiness");
     const requestOptions = {
       method: "POST",
       headers: { "Content-Type": "application/json" },

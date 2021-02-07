@@ -37,7 +37,6 @@ export default class Statistics extends React.Component {
   };
 
   render() {
-    console.log(this.state.totalEmployeeMoods);
     return (
       <div className="Statistics">
         <p>{this.state.responseMessage}</p>
