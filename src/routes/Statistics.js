@@ -32,7 +32,7 @@ export default class Statistics extends React.Component {
     )
       .then((response) => response.json())
       .then((data) => {
-        if (data.averageEmployeeHappiness != 0) {
+        if (!isNaN(data.averageEmployeeHappiness)) {
           this.setState({
             responseMessage: data.responseMessage,
             averageEmployeeHappiness: data.averageEmployeeHappiness,
@@ -154,7 +154,7 @@ export default class Statistics extends React.Component {
     } else {
       return (
         <>
-          <p style={{ padding: "10px" }}>{this.state.message}</p>
+          <h2 style={{ padding: "10px" }}>{this.state.message}</h2>
           <div
             style={{
               height: "100%",
