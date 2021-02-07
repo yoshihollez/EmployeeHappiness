@@ -8,3 +8,8 @@
 .buttonContainer > div {
   padding: 5%;
 }
+.voteCast {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
