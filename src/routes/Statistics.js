@@ -9,6 +9,7 @@ export default class Statistics extends React.Component {
     super(props);
     this.state = {
       responseMessage: "",
+      message: "Please login via github to authenticate you are a manager.",
       isManager: false,
       showChart: "none",
       timePeriod: "day",
@@ -63,7 +64,7 @@ export default class Statistics extends React.Component {
     )
       .then((res) => res.json())
       .then((data) => {
-        this.setState({ isManager: data.isManager });
+        this.setState({ isManager: data.isManager, message: data.message });
       })
       .catch(console.log);
   };
@@ -152,29 +153,32 @@ export default class Statistics extends React.Component {
       );
     } else {
       return (
-        <div
-          style={{
-            height: "100%",
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
-          }}
-        >
-          <GitHubLogin
-            clientId={process.env.REACT_APP_CLIENT_ID}
-            onSuccess={this.onSuccess}
-            onFailure={this.onFailure}
-            // scope={"read:user"}
-            redirectUri={
-              "http://" +
-              process.env.REACT_APP_HOSTIP +
-              ":" +
-              process.env.REACT_APP_HOSTPORT +
-              "/statistics"
-            }
-            className={"btn waves-effect waves-light"}
-          />
-        </div>
+        <>
+          <p style={{ padding: "10px" }}>{this.state.message}</p>
+          <div
+            style={{
+              height: "100%",
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+            }}
+          >
+            <GitHubLogin
+              clientId={process.env.REACT_APP_CLIENT_ID}
+              onSuccess={this.onSuccess}
+              onFailure={this.onFailure}
+              // scope={"read:user"}
+              redirectUri={
+                "http://" +
+                process.env.REACT_APP_HOSTIP +
+                ":" +
+                process.env.REACT_APP_HOSTPORT +
+                "/statistics"
+              }
+              className={"btn waves-effect waves-light"}
+            />
+          </div>
+        </>
       );
     }
   }
