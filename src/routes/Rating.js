@@ -15,10 +15,13 @@ export default class Rating extends React.Component {
     const requestOptions = {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ mood: moodValue }),
+      body: JSON.stringify({
+        mood: moodValue,
+        password: process.env.REACT_APP_API_PASSWORD,
+      }),
     };
     fetch(
-      `http://${process.env.REACT_APP_API_IP}:${process.env.REACT_APP_API_PORT}/addEmployeeHappiness/${process.env.REACT_APP_API_PASSWORD}`,
+      `http://${process.env.REACT_APP_API_IP}:${process.env.REACT_APP_API_PORT}/addEmployeeHappiness`,
       requestOptions
     )
       .then((response) => response.json())

@@ -50,7 +50,7 @@ export default class Statistics extends React.Component {
 
   onSuccess = (response) => {
     fetch(
-      `http://${process.env.REACT_APP_API_IP}:${process.env.REACT_APP_API_PORT}/managerLogin/${process.env.REACT_APP_API_PASSWORD}`,
+      `http://${process.env.REACT_APP_API_IP}:${process.env.REACT_APP_API_PORT}/managerLogin`,
       {
         method: "POST",
         headers: {
@@ -58,6 +58,7 @@ export default class Statistics extends React.Component {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
+          password: process.env.REACT_APP_API_PASSWORD,
           code: response.code,
         }),
       }
