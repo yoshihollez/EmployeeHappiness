@@ -5,7 +5,10 @@ import { Button, Icon } from "react-materialize";
 export default class Rating extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {};
+    this.state = {
+      responseMessage: "",
+      userVoted: false,
+    };
   }
 
   sendEmployeeHappiness = (moodValue) => {
@@ -19,52 +22,65 @@ export default class Rating extends React.Component {
       requestOptions
     )
       .then((response) => response.json())
-      .then((data) => this.setState({ responseMessage: data.responseMessage }));
+      .then((data) =>
+        this.setState({
+          responseMessage: data.responseMessage,
+          userVoted: data.userVoted,
+        })
+      );
   };
 
   render() {
-    return (
-      <div>
-        <h2>Please rate how your day was. All data will be anonymous.</h2>
-        <div className="buttonContainer">
-          <div>
-            <Button
-              onClick={() => {
-                this.sendEmployeeHappiness("dissatisfied");
-              }}
-              large
-              className="red"
-              floating
-              icon={<Icon large>sentiment_very_dissatisfied</Icon>}
-              node="button"
-            />
-          </div>
-          <div>
-            <Button
-              onClick={() => {
-                this.sendEmployeeHappiness("neutral");
-              }}
-              large
-              className="red"
-              floating
-              icon={<Icon large>sentiment_neutral</Icon>}
-              node="button"
-            />
-          </div>
-          <div>
-            <Button
-              onClick={() => {
-                this.sendEmployeeHappiness("satisfied");
-              }}
-              large
-              className="red"
-              floating
-              icon={<Icon large>sentiment_very_satisfied</Icon>}
-              node="button"
-            />
+    if (this.state.userVoted) {
+      return (
+        <div className="voteCast">
+          <h2>{this.state.responseMessage}</h2>
+        </div>
+      );
+    } else {
+      return (
+        <div>
+          <h2>Please rate how your day was. All data will be anonymous.</h2>
+          <div className="buttonContainer">
+            <div>
+              <Button
+                onClick={() => {
+                  this.sendEmployeeHappiness("dissatisfied");
+                }}
+                large
+                className="red"
+                floating
+                icon={<Icon large>sentiment_very_dissatisfied</Icon>}
+                node="button"
+              />
+            </div>
+            <div>
+              <Button
+                onClick={() => {
+                  this.sendEmployeeHappiness("neutral");
+                }}
+                large
+                className="red"
+                floating
+                icon={<Icon large>sentiment_neutral</Icon>}
+                node="button"
+              />
+            </div>
+            <div>
+              <Button
+                onClick={() => {
+                  this.sendEmployeeHappiness("satisfied");
+                }}
+                large
+                className="red"
+                floating
+                icon={<Icon large>sentiment_very_satisfied</Icon>}
+                node="button"
+              />
+            </div>
           </div>
         </div>
-      </div>
-    );
+      );
+    }
   }
 }
