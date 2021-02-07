@@ -40,7 +40,9 @@ export default class Rating extends React.Component {
     } else {
       return (
         <div>
-          <h2>Please rate how your day was. All data will be anonymous.</h2>
+          <h2>
+            Please rate how your day was. All data will be stored anonymously.
+          </h2>
           <div className="buttonContainer">
             <div>
               <Button
