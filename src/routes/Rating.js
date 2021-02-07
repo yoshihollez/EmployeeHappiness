@@ -15,7 +15,10 @@ export default class Rating extends React.Component {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ mood: moodValue }),
     };
-    fetch("http://localhost:4000/addEmployeeHappiness", requestOptions)
+    fetch(
+      `http://${process.env.REACT_APP_API_IP}:${process.env.REACT_APP_API_PORT}/addEmployeeHappiness`,
+      requestOptions
+    )
       .then((response) => response.json())
       .then((data) => this.setState({ responseMessage: data.responseMessage }));
   };

@@ -23,7 +23,9 @@ export default class Statistics extends React.Component {
   };
 
   getEmployeeHappinessRatings = async (period) => {
-    fetch(`http://localhost:4000/getEmployeeHappinessAverage/${period}`)
+    fetch(
+      `http://${process.env.REACT_APP_API_IP}:${process.env.REACT_APP_API_PORT}/getEmployeeHappinessAverage/${period}`
+    )
       .then((response) => response.json())
       .then((data) =>
         this.setState({
