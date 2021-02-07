@@ -9,6 +9,7 @@ export default class Statistics extends React.Component {
     super(props);
     this.state = {
       responseMessage: "",
+      isManager: false,
       showChart: "none",
       timePeriod: "day",
       averageEmployeeHappiness: 0,
@@ -30,12 +31,7 @@ export default class Statistics extends React.Component {
     )
       .then((response) => response.json())
       .then((data) => {
-        if (
-          data.responseMessage +
-            data.averageEmployeeHappiness +
-            data.totalEmployeeMoods !=
-          0
-        ) {
+        if (data.averageEmployeeHappiness != 0) {
           this.setState({
             responseMessage: data.responseMessage,
             averageEmployeeHappiness: data.averageEmployeeHappiness,
@@ -43,90 +39,143 @@ export default class Statistics extends React.Component {
             showChart: "inline",
           });
         } else {
-          this.setState({ showChart: "none" });
+          this.setState({
+            showChart: "none",
+            responseMessage: data.responseMessage,
+          });
         }
       });
   };
 
+  onSuccess = (response) => {
+    fetch(
+      `http://${process.env.REACT_APP_API_IP}:${process.env.REACT_APP_API_PORT}/managerLogin`,
+      {
+        method: "POST",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          code: response.code,
+        }),
+      }
+    )
+      .then((res) => res.json())
+      .then((data) => {
+        this.setState({ isManager: data.isManager });
+      })
+      .catch(console.log);
+  };
+  onFailure = (response) => console.error(response);
   render() {
-    return (
-      <div className="Statistics">
-        <p>{this.state.responseMessage}</p>
-        <Button
-          onClick={() => {
-            this.setState({ timePeriod: "day" });
-            this.getEmployeeHappinessRatings("day");
-          }}
-        >
-          day
-        </Button>
-        <Button
-          onClick={() => {
-            this.setState({ timePeriod: "week" });
-            this.getEmployeeHappinessRatings("week");
-          }}
-        >
-          week
-        </Button>
-        <Button
-          onClick={() => {
-            this.setState({ timePeriod: "month" });
-            this.getEmployeeHappinessRatings("month");
-          }}
-        >
-          month
-        </Button>
+    if (this.state.isManager) {
+      return (
+        <div className="Statistics">
+          <p>{this.state.responseMessage}</p>
+          <Button
+            onClick={() => {
+              this.setState({ timePeriod: "day" });
+              this.getEmployeeHappinessRatings("day");
+            }}
+          >
+            day
+          </Button>
+          <Button
+            onClick={() => {
+              this.setState({ timePeriod: "week" });
+              this.getEmployeeHappinessRatings("week");
+            }}
+          >
+            week
+          </Button>
+          <Button
+            onClick={() => {
+              this.setState({ timePeriod: "month" });
+              this.getEmployeeHappinessRatings("month");
+            }}
+          >
+            month
+          </Button>
 
-        <div>
           <div>
-            <Icon medium>sentiment_very_dissatisfied</Icon>
-            <p>A dissatisfied employee gets a score of 1.</p>
+            <div>
+              <Icon medium>sentiment_very_dissatisfied</Icon>
+              <p>A dissatisfied employee gets a score of 1.</p>
+            </div>
+            <div>
+              <Icon medium>sentiment_neutral</Icon>
+              <p>A neutral employee gets a score of 2.</p>
+            </div>
+            <div>
+              <Icon medium>sentiment_very_satisfied</Icon>
+              <p>A satisfied employee gets a score of 3.</p>
+            </div>
+            <div>
+              <Icon medium>assessment</Icon>
+              <p>
+                The average Happiness of the past {this.state.timePeriod} is:{" "}
+                {this.state.averageEmployeeHappiness}
+              </p>
+            </div>
           </div>
-          <div>
-            <Icon medium>sentiment_neutral</Icon>
-            <p>A neutral employee gets a score of 2.</p>
-          </div>
-          <div>
-            <Icon medium>sentiment_very_satisfied</Icon>
-            <p>A satisfied employee gets a score of 3.</p>
-          </div>
-          <div>
-            <Icon medium>assessment</Icon>
-            <p>
-              The average Happiness of the past {this.state.timePeriod} is:{" "}
-              {this.state.averageEmployeeHappiness}
-            </p>
+
+          <div className="graph">
+            <PieChart
+              style={{ display: this.state.showChart }}
+              label={({ dataEntry }) =>
+                `${dataEntry.title}: \n ${Math.round(dataEntry.percentage)} %`
+              }
+              labelStyle={{ fontSize: "25%", fontFamily: "sans-serif" }}
+              animate
+              data={[
+                {
+                  title: "Dissatisfied",
+                  value: this.state.totalEmployeeMoods
+                    .totalEmployeesDissatisfied,
+                  color: "#E38627",
+                },
+                {
+                  title: "Neutral",
+                  value: this.state.totalEmployeeMoods.totalEmployeesNeutral,
+                  color: "#C13C37",
+                },
+                {
+                  title: "Satisfied",
+                  value: this.state.totalEmployeeMoods.totalEmployeesSatisfied,
+                  color: "#6A2135",
+                },
+              ]}
+            />
           </div>
         </div>
-
-        <div className="graph">
-          <PieChart
-            style={{ display: this.state.showChart }}
-            label={({ dataEntry }) =>
-              `${dataEntry.title}: \n ${Math.round(dataEntry.percentage)} %`
+      );
+    } else {
+      return (
+        <div
+          style={{
+            height: "100%",
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+          }}
+        >
+          <GitHubLogin
+            clientId={process.env.REACT_APP_CLIENT_ID}
+            onSuccess={this.onSuccess}
+            onFailure={this.onFailure}
+            // scope={"read:user"}
+            redirectUri={
+              "http://" +
+              process.env.REACT_APP_HOSTIP +
+              ":" +
+              process.env.REACT_APP_HOSTPORT +
+              "/statistics"
             }
-            labelStyle={{ fontSize: "25%", fontFamily: "sans-serif" }}
-            animate
-            data={[
-              {
-                title: "Dissatisfied",
-                value: this.state.totalEmployeeMoods.totalEmployeesDissatisfied,
-                color: "#E38627",
-              },
-              {
-                title: "Neutral",
-                value: this.state.totalEmployeeMoods.totalEmployeesNeutral,
-                color: "#C13C37",
-              },
-              {
-                title: "Satisfied",
-                value: this.state.totalEmployeeMoods.totalEmployeesSatisfied,
-                color: "#6A2135",
-              },
-            ]}
+            className={"btn waves-effect waves-light"}
           />
         </div>
-      </div>
-    );
+      );
+    }
   }
 }
