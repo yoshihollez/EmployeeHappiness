@@ -28,7 +28,7 @@ export default class Statistics extends React.Component {
 
   getEmployeeHappinessRatings = async (period) => {
     fetch(
-      `http://${process.env.REACT_APP_API_IP}:${process.env.REACT_APP_API_PORT}/getEmployeeHappinessAverage/${period}`
+      `http://${process.env.REACT_APP_API_IP}:${process.env.REACT_APP_API_PORT}/getEmployeeHappinessAverage/${period}/${process.env.REACT_APP_API_PASSWORD}`
     )
       .then((response) => response.json())
       .then((data) => {
@@ -50,7 +50,7 @@ export default class Statistics extends React.Component {
 
   onSuccess = (response) => {
     fetch(
-      `http://${process.env.REACT_APP_API_IP}:${process.env.REACT_APP_API_PORT}/managerLogin`,
+      `http://${process.env.REACT_APP_API_IP}:${process.env.REACT_APP_API_PORT}/managerLogin/${process.env.REACT_APP_API_PASSWORD}`,
       {
         method: "POST",
         headers: {
