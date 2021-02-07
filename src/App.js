@@ -37,7 +37,7 @@ export default class App extends React.Component {
             preventScrolling: true,
           }}
         >
-          <NavItem href="/#">defualt</NavItem>
+          <NavItem href="/#">rating</NavItem>
           <NavItem href="/statistics">statistics</NavItem>
         </Navbar>
         <Switch>
