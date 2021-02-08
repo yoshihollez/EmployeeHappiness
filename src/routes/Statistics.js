@@ -32,22 +32,25 @@ export default class Statistics extends React.Component {
     )
       .then((response) => response.json())
       .then((data) => {
-        console.log(data);
-        if (!(data.averageEmployeeHappiness == 0)) {
-          this.setState({
-            responseMessage: data.responseMessage,
-            averageEmployeeHappiness: data.averageEmployeeHappiness,
-            totalEmployeeMoods: data.totalEmployeeMoods,
-            showChart: "inline",
-          });
-        } else {
-          this.setState({
-            showChart: "none",
-            responseMessage: data.responseMessage,
-            averageEmployeeHappiness: data.averageEmployeeHappiness,
-          });
-        }
-      });
+        if (!data.error) {
+          console.log(data);
+          if (!(data.averageEmployeeHappiness == 0)) {
+            this.setState({
+              responseMessage: data.responseMessage,
+              averageEmployeeHappiness: data.averageEmployeeHappiness,
+              totalEmployeeMoods: data.totalEmployeeMoods,
+              showChart: "inline",
+            });
+          } else {
+            this.setState({
+              showChart: "none",
+              responseMessage: data.responseMessage,
+              averageEmployeeHappiness: data.averageEmployeeHappiness,
+            });
+          }
+        } else console.log(data.error);
+      })
+      .catch(console.log);
   };
 
   onSuccess = (response) => {
@@ -67,7 +70,9 @@ export default class Statistics extends React.Component {
     )
       .then((res) => res.json())
       .then((data) => {
-        this.setState({ isManager: data.isManager, message: data.message });
+        if (!data.error) {
+          this.setState({ isManager: data.isManager, message: data.message });
+        } else console.log(data.error);
       })
       .catch(console.log);
   };
@@ -88,7 +93,7 @@ export default class Statistics extends React.Component {
           <Button
             onClick={() => {
               this.setState({ timePeriod: "week" });
-              this.getEmployeeHappinessRatings("week");
+              this.getEmployeeHappinessRatings("weeeeek");
             }}
           >
             week

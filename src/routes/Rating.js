@@ -25,12 +25,14 @@ export default class Rating extends React.Component {
       requestOptions
     )
       .then((response) => response.json())
-      .then((data) =>
-        this.setState({
-          responseMessage: data.responseMessage,
-          userVoted: data.userVoted,
-        })
-      );
+      .then((data) => {
+        if (!data.error) {
+          this.setState({
+            responseMessage: data.responseMessage,
+            userVoted: data.userVoted,
+          });
+        } else console.log(data.error);
+      });
   };
 
   render() {
