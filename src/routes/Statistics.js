@@ -4,6 +4,7 @@ import { Button, Icon } from "react-materialize";
 import { PieChart } from "react-minimal-pie-chart";
 import GitHubLogin from "react-github-login";
 
+//component for manager to see employee happiness statistics.
 export default class Statistics extends React.Component {
   constructor(props) {
     super(props);
@@ -29,14 +30,16 @@ export default class Statistics extends React.Component {
     }
   };
 
+  // Gets data from database.
   getEmployeeHappinessRatings = async (period) => {
     fetch(
-      `http://${process.env.REACT_APP_API_IP}:${process.env.REACT_APP_API_PORT}/getEmployeeHappinessAverage/${period}/${process.env.REACT_APP_API_PASSWORD}`
+      `http://${process.env.REACT_APP_API_IP}:${process.env.REACT_APP_API_PORT}/getEmployeeHappinessData/${period}/${process.env.REACT_APP_API_PASSWORD}`
     )
       .then((response) => response.json())
       .then((data) => {
         if (!data.error) {
           console.log(data);
+          // Only shows graph if there is data about the asked period.
           if (!(data.averageEmployeeHappiness == 0)) {
             this.setState({
               responseMessage: data.responseMessage,
