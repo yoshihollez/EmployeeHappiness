@@ -168,15 +168,8 @@ export default class Statistics extends React.Component {
     } else {
       return (
         <>
-          <h2 style={{ padding: "10px" }}>{this.state.message}</h2>
-          <div
-            style={{
-              height: "100%",
-              display: "flex",
-              justifyContent: "center",
-              alignItems: "center",
-            }}
-          >
+          <h2 className="titleMessage">{this.state.message}</h2>
+          <div className="githubContainer">
             <GitHubLogin
               clientId={process.env.REACT_APP_CLIENT_ID}
               onSuccess={this.onSuccess}

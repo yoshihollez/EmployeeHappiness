@@ -10,3 +10,12 @@
   right: 15%;
   top: 15%;
 }
+.titleMessage {
+  padding: "10px";
+}
+.githubContainer {
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
