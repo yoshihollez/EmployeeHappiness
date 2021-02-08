@@ -29,7 +29,6 @@ export default class Statistics extends React.Component {
 
   componentDidMount = () => {
     this.getEmployeeHappinessRatings("day");
-
     if (process.env.REACT_APP_USE_GITHUB_LOGIN == "false") {
       this.setState({ isManager: true });
     }
@@ -43,7 +42,6 @@ export default class Statistics extends React.Component {
       .then((response) => response.json())
       .then((data) => {
         if (!data.error) {
-          console.log(data);
           // Only shows graph if there is data about the asked period.
           if (!(data.averageEmployeeHappiness == 0)) {
             this.setState({
@@ -64,6 +62,7 @@ export default class Statistics extends React.Component {
       .catch(console.log);
   };
 
+  // onSucces from github oauth
   onSuccess = (response) => {
     fetch(
       `http://${process.env.REACT_APP_API_IP}:${process.env.REACT_APP_API_PORT}/managerLogin`,
@@ -92,6 +91,7 @@ export default class Statistics extends React.Component {
     this.setState({ value: value });
   };
 
+  // Adds test data to the database.
   addTestData = (moodValue) => {
     const requestOptions = {
       method: "POST",
@@ -111,7 +111,6 @@ export default class Statistics extends React.Component {
         if (!data.error) {
           this.setState({
             responseMessage: data.responseMessage,
-            userVoted: data.userVoted,
           });
         } else console.log(data.error);
       });
@@ -168,6 +167,10 @@ export default class Statistics extends React.Component {
             </div>
           </div>
           <div>
+            <p>
+              For testing purposes you can manually choose date and add votes to
+              the database.
+            </p>
             <DatePicker
               onChange={(value) => {
                 this.onChange(value);
@@ -176,7 +179,7 @@ export default class Statistics extends React.Component {
               format="y-MM-dd"
               monthAriaLabel="Month"
             />
-            <div className="buttonContainer">
+            <div className="testButtonsContainer">
               <div>
                 <Button
                   onClick={() => {
