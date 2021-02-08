@@ -2,15 +2,13 @@
 
 ## Setup the project
 
-To start the project you will first need a few requirments.
-
-You need to have nodejs installed.
+To start the project you need to have nodejs installed.
 
 ## Create a .env file with the following parameters.
 
 You can change the variables to match your enviorment.
 
-Client id is needed for githubs OAuth and can be created [here](https://github.com/settings/developers). Note that the Homepage URL and Authorization callback URL should match your enviorment. The id needs to be the same in the API.
+Client id is needed for githubs OAuth and can be created [here](https://github.com/settings/developers). Note that the Homepage URL and Authorization callback URL should match the URL for the web application. The id needs to be the same in the API.
 
 Only the e-mail adresses that are entered in the .env file of the API will be able to login. However you can disable the github login by setting REACT_APP_USE_GITHUB_LOGIN to false.
 
@@ -38,7 +36,8 @@ Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 The page will reload if you make edits.\
 You will also see any lint errors in the console.
 
-### build and run docker
+### Run using docker
+Run the following command to start a docker container with the API in it.
 
 ```
 docker build -t employeehappiness .
