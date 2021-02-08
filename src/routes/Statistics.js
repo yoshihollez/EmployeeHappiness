@@ -93,7 +93,7 @@ export default class Statistics extends React.Component {
           <Button
             onClick={() => {
               this.setState({ timePeriod: "week" });
-              this.getEmployeeHappinessRatings("weeeeek");
+              this.getEmployeeHappinessRatings("week");
             }}
           >
             week
