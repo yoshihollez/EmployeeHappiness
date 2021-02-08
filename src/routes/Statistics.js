@@ -32,7 +32,8 @@ export default class Statistics extends React.Component {
     )
       .then((response) => response.json())
       .then((data) => {
-        if (!isNaN(data.averageEmployeeHappiness)) {
+        console.log(data);
+        if (!(data.averageEmployeeHappiness == 0)) {
           this.setState({
             responseMessage: data.responseMessage,
             averageEmployeeHappiness: data.averageEmployeeHappiness,
@@ -43,6 +44,7 @@ export default class Statistics extends React.Component {
           this.setState({
             showChart: "none",
             responseMessage: data.responseMessage,
+            averageEmployeeHappiness: data.averageEmployeeHappiness,
           });
         }
       });
