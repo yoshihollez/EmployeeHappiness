@@ -20,7 +20,7 @@ export default class App extends React.Component {
           alignLinks="right"
           brand={
             <a className="brand-logo" href="/#">
-              Employee Happiness
+              WeAreHappy
             </a>
           }
           id="mobile-nav"
