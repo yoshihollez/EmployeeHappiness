@@ -24,6 +24,9 @@ export default class Statistics extends React.Component {
 
   componentDidMount = () => {
     this.getEmployeeHappinessRatings("day");
+    if (process.env.REACT_APP_USE_GITHUB_LOGIN == "false") {
+      this.setState({ isManager: true });
+    }
   };
 
   getEmployeeHappinessRatings = async (period) => {
