@@ -1,8 +1,32 @@
-# Getting Started with Create React App
+# Employee Happiness
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## Setup the project
 
-## Available Scripts
+To start the project you will first need a few requirments.
+
+You need to have nodejs installed.
+
+## Create a .env file with the following parameters.
+
+You can change the variables to match your enviorment.
+
+Client id is needed for githubs OAuth and can be created [here](https://github.com/settings/developers). Note that the Homepage URL and Authorization callback URL should match your enviorment. The id needs to be the same in the API.
+
+Only the e-mail adresses that are entered in the .env file of the API will be able to login. However you can disable the github login by setting REACT_APP_USE_GITHUB_LOGIN to false.
+
+```
+REACT_APP_API_IP="localhost"
+REACT_APP_API_PORT=4000
+REACT_APP_API_PASSWORD="123"
+
+REACT_APP_USE_GITHUB_LOGIN="false"
+REACT_APP_CLIENT_ID=
+
+REACT_APP_HOSTIP="localhost"
+REACT_APP_HOSTPORT=3000
+```
+
+### Start the project
 
 In the project directory, you can run:
 
@@ -14,57 +38,10 @@ Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 The page will reload if you make edits.\
 You will also see any lint errors in the console.
 
-### `npm test`
+### build and run docker
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+```
+docker build -t employeehappiness .
 
-### `npm run build`
-
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+docker run -it -d -p3000:3000 --name employeehappiness employeehappiness
+```
