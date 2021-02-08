@@ -2,6 +2,7 @@ import React from "react";
 import "./Rating.css";
 import { Button, Icon } from "react-materialize";
 
+// Component for sending employee happiness.
 export default class Rating extends React.Component {
   constructor(props) {
     super(props);
@@ -10,7 +11,7 @@ export default class Rating extends React.Component {
       userVoted: false,
     };
   }
-
+  // Sends the mood of the employee to the database using the api.
   sendEmployeeHappiness = (moodValue) => {
     const requestOptions = {
       method: "POST",
