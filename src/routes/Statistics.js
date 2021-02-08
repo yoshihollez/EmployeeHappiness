@@ -1,8 +1,10 @@
-import React from "react";
+import React, { useState } from "react";
 import "./Statistics.css";
 import { Button, Icon } from "react-materialize";
 import { PieChart } from "react-minimal-pie-chart";
 import GitHubLogin from "react-github-login";
+import DatePicker from "react-date-picker";
+import dateFormat from "dateformat";
 
 //component for manager to see employee happiness statistics.
 export default class Statistics extends React.Component {
@@ -15,6 +17,8 @@ export default class Statistics extends React.Component {
       showChart: "none",
       timePeriod: "day",
       averageEmployeeHappiness: 0,
+      onChange: "",
+      value: "",
       totalEmployeeMoods: {
         totalEmployeesDissatisfied: 1,
         totalEmployeesNeutral: 1,
@@ -25,6 +29,7 @@ export default class Statistics extends React.Component {
 
   componentDidMount = () => {
     this.getEmployeeHappinessRatings("day");
+
     if (process.env.REACT_APP_USE_GITHUB_LOGIN == "false") {
       this.setState({ isManager: true });
     }
@@ -83,6 +88,34 @@ export default class Statistics extends React.Component {
       .catch(console.log);
   };
   onFailure = (response) => console.error(response);
+  onChange = (value) => {
+    this.setState({ value: value });
+  };
+
+  addTestData = (moodValue) => {
+    const requestOptions = {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        mood: moodValue,
+        date: dateFormat(this.state.value, "isoDateTime").substr(0, 10),
+        password: process.env.REACT_APP_API_PASSWORD,
+      }),
+    };
+    fetch(
+      `http://${process.env.REACT_APP_API_IP}:${process.env.REACT_APP_API_PORT}/addTestData`,
+      requestOptions
+    )
+      .then((response) => response.json())
+      .then((data) => {
+        if (!data.error) {
+          this.setState({
+            responseMessage: data.responseMessage,
+            userVoted: data.userVoted,
+          });
+        } else console.log(data.error);
+      });
+  };
   render() {
     if (this.state.isManager) {
       return (
@@ -134,7 +167,54 @@ export default class Statistics extends React.Component {
               </p>
             </div>
           </div>
-
+          <div>
+            <DatePicker
+              onChange={(value) => {
+                this.onChange(value);
+              }}
+              value={this.state.value}
+              format="y-MM-dd"
+              monthAriaLabel="Month"
+            />
+            <div className="buttonContainer">
+              <div>
+                <Button
+                  onClick={() => {
+                    this.addTestData("dissatisfied");
+                  }}
+                  large
+                  className="red"
+                  floating
+                  icon={<Icon large>sentiment_very_dissatisfied</Icon>}
+                  node="button"
+                />
+              </div>
+              <div>
+                <Button
+                  onClick={() => {
+                    this.addTestData("neutral");
+                  }}
+                  large
+                  className="red"
+                  floating
+                  icon={<Icon large>sentiment_neutral</Icon>}
+                  node="button"
+                />
+              </div>
+              <div>
+                <Button
+                  onClick={() => {
+                    this.addTestData("satisfied");
+                  }}
+                  large
+                  className="red"
+                  floating
+                  icon={<Icon large>sentiment_very_satisfied</Icon>}
+                  node="button"
+                />
+              </div>
+            </div>
+          </div>
           <div className="graph">
             <PieChart
               style={{ display: this.state.showChart }}
