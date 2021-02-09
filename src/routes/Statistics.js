@@ -54,7 +54,7 @@ export default class Statistics extends React.Component {
             this.setState({
               showChart: "none",
               responseMessage: data.responseMessage,
-              averageEmployeeHappiness: data.averageEmployeeHappiness,
+              averageEmployeeHappiness: "Unavailable",
             });
           }
         } else console.log(data.error);
