@@ -18,7 +18,6 @@ export default class Rating extends React.Component {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
         mood: moodValue,
-        password: process.env.REACT_APP_API_PASSWORD,
       }),
     };
     fetch(
