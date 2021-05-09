@@ -7,12 +7,12 @@ import Rating from "./routes/Rating";
 import Statistics from "./routes/Statistics";
 import Login from "./routes/Login";
 import { ApolloProvider } from "@apollo/client/react";
-import { ApolloClient, InMemoryCache } from "@apollo/client";
+import { ApolloClient, createHttpLink, InMemoryCache } from "@apollo/client";
 
 const client = new ApolloClient({
   uri: "http://localhost:4000/graphql",
   cache: new InMemoryCache(),
-  credentials: "same-origin",
+  credentials: "include",
 });
 
 export default class App extends React.Component {

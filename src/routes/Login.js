@@ -4,6 +4,7 @@ import { Button } from "react-materialize";
 import { useMutation, useLazyQuery } from "@apollo/client";
 import gql from "graphql-tag";
 import "./Login.css";
+import { useHistory } from "react-router-dom";
 
 const LOGIN = gql`
   query login($password: String!, $username: String!) {
@@ -33,6 +34,7 @@ const CREATE_USER = gql`
     }
   }
 `;
+
 export default function Login(props) {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
@@ -48,11 +50,13 @@ export default function Login(props) {
       username: username,
     },
   });
+  const history = useHistory();
 
-  if (data) {
-    console.log(data);
+  if (loading) {
+    // gives warning that you shouldn't update during a transition.
+    // redirects to default page after succesfull login.
+    // history.push("/");
   }
-
   return (
     <div className="container">
       <div className="inputBox">
