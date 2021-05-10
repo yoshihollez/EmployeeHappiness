@@ -4,7 +4,7 @@ import { Button, Icon } from "react-materialize";
 import { PieChart } from "react-minimal-pie-chart";
 import gql from "graphql-tag";
 import { useLazyQuery } from "@apollo/client";
-
+// API call to graphql backend for an array of the employee happiness.
 const EMPLOYEEHAPPINESS = gql`
   query {
     happiness {
@@ -12,13 +12,15 @@ const EMPLOYEEHAPPINESS = gql`
     }
   }
 `;
+
 export default function Statistics(props) {
+  //hooks
   const [responseMessage, setResponseMessage] = useState("");
   const [showChart, setShowChart] = useState("none");
   const [timePeriod, setTimePeriod] = useState("day");
   const [averageEmployeeHappiness, setAverageEmployeeHappiness] = useState(0);
   const [processData, setProcessData] = useState(true);
-  const [graphData, setGraphData] = useState();
+  const [graphData, setGraphData] = useState([]);
 
   const [getEmployeeHappiness, { loading, error, data }] = useLazyQuery(
     EMPLOYEEHAPPINESS,
@@ -35,26 +37,27 @@ export default function Statistics(props) {
     getEmployeeHappiness();
   }, []);
 
+  // runs if the backend succesfully sent employee happiness data.
   if (data && processData) {
-    console.log("test");
-    let temp = [0, 0, 0];
-    let score = 0;
+    let amountOfVotes = [0, 0, 0];
+    let totalHappinessScore = 0;
     let graph = [];
+    // goes through the backend data and adds scores/votes.
     data.happiness.forEach((element) => {
       switch (element.mood) {
         case "dissatisfied":
-          temp[0]++;
-          score++;
+          amountOfVotes[0]++;
+          totalHappinessScore++;
 
           break;
         case "neutral":
-          temp[1]++;
-          score += 2;
+          amountOfVotes[1]++;
+          totalHappinessScore += 2;
 
           break;
         case "satisfied":
-          temp[2]++;
-          score += 3;
+          amountOfVotes[2]++;
+          totalHappinessScore += 3;
 
           break;
 
@@ -62,24 +65,25 @@ export default function Statistics(props) {
           break;
       }
     });
-    if (temp[0] > 0) {
+    // only allows the graph to to thow data if there are votes for it.
+    if (amountOfVotes[0] > 0) {
       graph.push({
         title: "Dissatisfied",
-        value: temp[0],
+        value: amountOfVotes[0],
         color: "#E38627",
       });
     }
-    if (temp[1] > 0) {
+    if (amountOfVotes[1] > 0) {
       graph.push({
         title: "Neutral",
-        value: temp[1],
+        value: amountOfVotes[1],
         color: "#C13C37",
       });
     }
-    if (temp[2] > 0) {
+    if (amountOfVotes[2] > 0) {
       graph.push({
         title: "Satisfied",
-        value: temp[2],
+        value: amountOfVotes[2],
         color: "#6A2135",
       });
     }
