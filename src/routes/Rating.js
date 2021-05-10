@@ -4,6 +4,7 @@ import { Button, Icon } from "react-materialize";
 import { useMutation, useQuery, useLazyQuery } from "@apollo/client";
 import gql from "graphql-tag";
 
+// API call to graphql backend to add and employees happiness to the backend.
 const CREATE_HAPPINESS = gql`
   mutation createHappiness($mood: String!) {
     createHappiness(mood: $mood) {
@@ -20,7 +21,7 @@ const CREATE_HAPPINESS = gql`
   }
 `;
 export default function Rating(props) {
-  // const [userVotedToday, setUserVotedToday] = useState(false);
+  //react hooks
   const [responseMessage, setResponseMessage] = useState(
     "Please rate how your day was. All data will be stored anonymously."
   );
@@ -32,9 +33,11 @@ export default function Rating(props) {
   });
 
   const sendEmployeeHappiness = async (moodValue) => {
+    //await is needed otherwise and empty mood will be sent.
     await setMood(moodValue);
     try {
       let response = await createHappiness();
+      //checks if an error is returned and give that error message otherwise give normal message.
       if (response.data.createHappiness.errors) {
         setResponseMessage(response.data.createHappiness.errors[0].message);
       } else {
