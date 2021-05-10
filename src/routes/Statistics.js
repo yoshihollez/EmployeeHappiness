@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "./Statistics.css";
 import { Button, Icon } from "react-materialize";
 import { PieChart } from "react-minimal-pie-chart";
@@ -29,8 +29,14 @@ export default function Statistics(props) {
       },
     }
   );
+  // get the day data from the database when the page is first loaded.
+  //  the [] are needed at the end otherwise the code wil be run repeatedly.
+  useEffect(() => {
+    getEmployeeHappiness();
+  }, []);
 
   if (data && processData) {
+    console.log("test");
     let temp = [0, 0, 0];
     let score = 0;
     let graph = [];
