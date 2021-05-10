@@ -8,9 +8,9 @@ import Statistics from "./routes/Statistics";
 import Login from "./routes/Login";
 import { ApolloProvider } from "@apollo/client/react";
 import { ApolloClient, createHttpLink, InMemoryCache } from "@apollo/client";
-
+console.log(process.env.REACT_APP_API_IP);
 const client = new ApolloClient({
-  uri: "http://localhost:4000/graphql",
+  uri: process.env.REACT_APP_API_IP,
   cache: new InMemoryCache(),
   credentials: "include",
 });
