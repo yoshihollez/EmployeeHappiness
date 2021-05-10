@@ -90,7 +90,7 @@ export default function Statistics(props) {
     setProcessData(false);
     setShowChart(true);
     setGraphData(graph);
-    setAverageEmployeeHappiness(score);
+    setAverageEmployeeHappiness(totalHappinessScore);
   }
 
   if (true) {
