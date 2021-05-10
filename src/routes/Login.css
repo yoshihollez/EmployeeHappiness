@@ -14,3 +14,6 @@
 .container {
   width: 25%;
 }
+.password {
+  border: 1px solid #ff0000;
+}
