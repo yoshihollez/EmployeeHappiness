@@ -8,20 +8,8 @@ To start the project you need to have nodejs installed.
 
 You can change the variables to match your enviorment.
 
-Client id is needed for githubs OAuth and can be created [here](https://github.com/settings/developers). Note that the Homepage URL and Authorization callback URL should match the URL for the web application. The id needs to be the same in the API.
-
-Only the e-mail adresses that are entered in the .env file of the API will be able to login. However you can disable the github login by setting REACT_APP_USE_GITHUB_LOGIN to false.
-
 ```
-REACT_APP_API_IP="localhost"
-REACT_APP_API_PORT=4000
-REACT_APP_API_PASSWORD="123"
-
-REACT_APP_USE_GITHUB_LOGIN="false"
-REACT_APP_CLIENT_ID=
-
-REACT_APP_HOSTIP="localhost"
-REACT_APP_HOSTPORT=3000
+REACT_APP_API_URL"http://localhost:4000/graphql"
 ```
 
 ### Start the project
@@ -37,6 +25,7 @@ The page will reload if you make edits.\
 You will also see any lint errors in the console.
 
 ### Run using docker
+
 Run the following command to start a docker container with the API in it.
 
 ```
